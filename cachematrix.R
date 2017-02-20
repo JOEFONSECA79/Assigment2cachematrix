@@ -1,40 +1,64 @@
+# Joe Fonseca - joefonseca79@yahoo.com
+# Cousera R Week 3 Programming Assignment 2: Lexical Scoping
 
 
-
-    #makeVector creates a special "vector", which is really a list containing a function to
-    #set the value of the vector
-    #get the value of the vector
-    #set the value of the mean
-    #get the value of the mean
-makeVector <- function(x = numeric()) {
-  m <- NULL
+    #Function to create a matrix of the inverse
+makeCacheMatrix <- function(x = matrix()) {
+  inv <- NULL    # inverse of the matrix
   set <- function(y) {
-    x <<- y
-    m <<- NULL
-  }
-  get <- function() x
-  setmean <- function(mean) m <<- mean
-  getmean <- function() m
-  list(set = set, get = get,
-       setmean = setmean,
-       getmean = getmean)
+      x <<- y
+      inv <<- NULL    # inverse of matrix
+}
+
+get <- function() x
+    setInverse <- function(Inverse) inv <<- Inverse
+    getInverse <- function() inv
+    list( set = set, get = get, setInverse = setInverse, getInverse = getInverse )
 }
 
 
+#makeCacheMatrix
 
 
 
-
-    # calculates the mean of the special "vector" created with the above function. However, it first checks to see if the mean has already been calculated. If so, it gets the mean from the cache and skips the computation. 
-cachemean <- function(x, ...) {
-  m <- x$getmean()
-  if(!is.null(m)) {
-    message("getting cached data")
-    return(m)
-  }
-  data <- x$get()
-  m <- mean(data, ...)
-  x$setmean(m)
-  m
+    #Calcs the inverse of th matrix above
+cacheSolve <- function(x, ...) {
+  
+    inv <- x$getInverse()
+    if(!is.null(inv)){
+        message("getting cached data")
+        return(inv)
+    }
+    data <- x$get()
+    inv <- solve(data, ...)
+    x$setInverse(inv)
+    inv
 }
+
+
+#cacheSolve
+
+
+
+
+source("cachematrix.R")
+#C:\Users\jfonseca\Desktop\Data Sci - R\COUSERA\Week 3 Loop Functions and Debugging\Coursera-master
+
+joes_matrix <- cacheSolve(matrix(1:5, 2, 2))
+#Error in options() : node stack overflow
+#Error during wrapup : node stack overflow
+
+
+joes_matrix <- cacheSolve(matrix(1:4, 2, 2))
+#Error in x$getInverse : $ operator is invalid for atomic vectors
+
+
+
+
+
+
+
+
+
+
 
